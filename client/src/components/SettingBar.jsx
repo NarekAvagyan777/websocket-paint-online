@@ -14,7 +14,9 @@ const SettingBar = () => {
         min={1}
         max={50}
       />
-      <label htmlFor="stroke-color">Stroke color</label>
+      <label style={{ margin: "0 10px" }} htmlFor="stroke-color">
+        Stroke color
+      </label>
       <input
         onChange={(e) => toolState.setStrokeColor(e.target.value)}
         id="stroke-color"

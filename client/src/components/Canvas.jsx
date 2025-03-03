@@ -14,6 +14,7 @@ const Canvas = observer(() => {
   const canvasRef = useRef();
   const usernameRef = useRef();
   const [modal, setModal] = useState(true);
+  const [error, setError] = useState(false);
   const params = useParams();
 
   useEffect(() => {
@@ -108,8 +109,14 @@ const Canvas = observer(() => {
   };
 
   const connectHandler = () => {
-    canvasState.setUsername(usernameRef.current.value);
-    setModal(false);
+    if (usernameRef.current.value.trim()) {
+      canvasState.setUsername(usernameRef.current.value);
+      setError(false);
+      setModal(false);
+      return;
+    }
+
+    setError(true);
   };
 
   return (
@@ -125,7 +132,8 @@ const Canvas = observer(() => {
             <Modal.Title>Type Your name</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <input type="text" ref={usernameRef} />
+            <input type="text" placeholder="Name" ref={usernameRef} />
+            {error && <p className="error_text">Name can't be empty</p>}
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={() => connectHandler()}>
